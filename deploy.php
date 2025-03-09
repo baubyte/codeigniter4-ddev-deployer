@@ -36,3 +36,4 @@ host("production")
 // Hooks
 
 after('deploy:failed', 'deploy:unlock');
+after('deploy','deploy:cleanup');
