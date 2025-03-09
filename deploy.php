@@ -12,9 +12,10 @@ if (file_exists($envFile)) {
         putenv($line);
     }
 }
-// Config
+// Config 
 
 set('repository', getenv('DEPLOY_REPO') ?: 'git@github.com:baubyte/codeigniter4-ddev-deployer.git');
+set('keep_releases',2);
 
 add('shared_files', []);
 add('shared_dirs', []);
@@ -22,9 +23,15 @@ add('writable_dirs', []);
 
 // Hosts
 
-host(getenv('DEPLOY_HOST') ?: 'default-host')
+host("development")
+    ->set('hostname',getenv('DEPLOY_HOST') ?: 'default-host')
     ->set('remote_user', getenv('DEPLOY_USER') ?: 'default-user')
     ->set('deploy_path', getenv('DEPLOY_PATH') ?: '/default/path');
+
+host("production")
+    ->set('hostname',getenv('DEPLOY_HOST') ?: 'default-host')
+    ->set('remote_user', getenv('DEPLOY_USER') ?: 'default-user')
+    ->set('deploy_path', getenv('DEPLOY_PATH_PROD') ?: '/default/path');
 
 // Hooks
 
